@@ -211,7 +211,7 @@ func (s *Server) buildMuxer() {
 	s.mux.Host("{bucketName:.+}").Path("/{objectName:.+}").Methods("GET", "HEAD").HandlerFunc(s.downloadObject)
 
 	// can not use apiPrefix url?
-	s.mux.Host(s.publicHost).Path("/b/{bucketName}/o/{objectName:.+}/acl/{entity}").Methods("PUT").HandlerFunc(jsonToHTTPHandler(s.setObjectACL))
+	s.mux.Path("/b/{bucketName}/o/{objectName:.+}/acl/{entity}").Methods("PUT").HandlerFunc(jsonToHTTPHandler(s.setObjectACL))
 
 	// Form Uploads
 	s.mux.Host(s.publicHost).Path("/{bucketName}").MatcherFunc(matchFormData).Methods("POST", "PUT").HandlerFunc(xmlToHTTPHandler(s.insertFormObject))
