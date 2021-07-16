@@ -218,6 +218,9 @@ func (s *Server) buildMuxer() {
 	s.mux.Host(s.publicHost).Path("/{bucketName}/{objectName:.+}").Methods("POST", "PUT").HandlerFunc(jsonToHTTPHandler(s.insertObject))
 	s.mux.Host(bucketHost).Path("/{objectName:.+}").Methods("POST", "PUT").HandlerFunc(jsonToHTTPHandler(s.insertObject))
 	s.mux.Host("{bucketName:.+}").Path("/{objectName:.+}").Methods("POST", "PUT").HandlerFunc(jsonToHTTPHandler(s.insertObject))
+
+	// can not use apiPrefix url?
+	s.mux.Host(s.publicHost).Path("/b/{bucketName}/o/{objectName:.+}/acl/{entity}").Methods("PUT").HandlerFunc(jsonToHTTPHandler(s.setObjectACL))
 }
 
 // Stop stops the server, closing all connections.
